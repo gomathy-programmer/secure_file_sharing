@@ -90,6 +90,10 @@ class ActivityLog(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
     user = db.relationship('User')
+# Create tables automatically when the app starts on Render
+with app.app_context():
+    db.create_all()
+
 
 
 # ---------------------------------------------------------------------------
