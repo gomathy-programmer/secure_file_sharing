@@ -10,7 +10,7 @@
       <div class="card-body">
         <h5 class="card-title">Upload &amp; Share a File</h5>
         <p class="text-secondary small">The file is encrypted with a fresh AES key before it ever touches the
-          disk. That AES key is then wrapped with RSA so only the server can unwrap it again.</p>
+          disk. That AES key is then stored securely so only an authorized recipient can decrypt it again.</p>
         <form method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data">
           <div class="mb-3">
             <label class="form-label">Choose file</label>
@@ -36,6 +36,7 @@
     <div class="card shadow-sm mb-4">
       <div class="card-body">
         <h5 class="card-title">My Files</h5>
+        <p class="text-secondary small">Stored encrypted on the server — decrypted only when you download.</p>
         {% if my_files %}
         <div class="table-responsive">
           <table class="table table-sm align-middle">
@@ -49,7 +50,7 @@
                 <td>{{ (f.file_size / 1024) | round(1) }} KB</td>
                 <td>{{ f.recipient.username if f.recipient else '— private —' }}</td>
                 <td>{{ f.uploaded_at.strftime('%d %b %Y, %H:%M') }}</td>
-                <td><a class="btn btn-sm btn-outline-success" href="{{ url_for('download', file_id=f.id) }}">Download</a></td>
+                <td><a class="btn btn-sm btn-outline-success" href="{{ url_for('download', file_id=f.id) }}">Decrypt &amp; Download</a></td>
               </tr>
               {% endfor %}
             </tbody>
@@ -64,6 +65,7 @@
     <div class="card shadow-sm">
       <div class="card-body">
         <h5 class="card-title">Shared With Me</h5>
+        <p class="text-secondary small">Decrypted on your device the moment you click Decrypt &amp; Download.</p>
         {% if shared_with_me %}
         <div class="table-responsive">
           <table class="table table-sm align-middle">
@@ -77,7 +79,7 @@
                 <td>{{ (f.file_size / 1024) | round(1) }} KB</td>
                 <td>{{ f.owner.username }}</td>
                 <td>{{ f.uploaded_at.strftime('%d %b %Y, %H:%M') }}</td>
-                <td><a class="btn btn-sm btn-outline-success" href="{{ url_for('download', file_id=f.id) }}">Download</a></td>
+                <td><a class="btn btn-sm btn-outline-success" href="{{ url_for('download', file_id=f.id) }}">Decrypt &amp; Download</a></td>
               </tr>
               {% endfor %}
             </tbody>
